@@ -8,7 +8,7 @@ $(document).ready(() => {
     var options = {
         part: 'snippet',
         key: key,
-        maxResult: 20,
+        maxResults: 20,
         playlistId: playlistId
     };
 
@@ -37,17 +37,23 @@ $(document).ready(() => {
             let miniature = item.snippet.thumbnails.high.url; 
             let title = item.snippet.title;
             let description = item.snippet.description.substring(0, 100);
+            let vidId = item.snippet.resourceId.videoId;
 
             $('.list').append(`
-                <div class="videos">
+                <div class="videos" data-key="${vidId}">
                     <img src="${miniature}" alt="" class="thumb">
                     <div class="details">
                         <h4>${title}</h4>
                         <p>${description}</p>
                     </div>            
                 </div>
-            `); 
+            `);   
         });
+
+        $('.list').on('click', '.videos',function () {
+            let id = $(this).attr('data-key');
+            mainVideo(id);
+        }); 
     }
 
 });
